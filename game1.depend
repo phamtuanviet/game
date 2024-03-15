@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1710170141 source:c:\users\admin\documents\python scripts\a\aaa\bin\debug\game1\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
