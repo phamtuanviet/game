@@ -1,4 +1,5 @@
 #include <SDL.h>
+<<<<<<< HEAD
 #include <SDL_image.h>
 #include <bits/stdc++.h>
 using namespace std;
@@ -475,5 +476,7 @@ int main(int argc, char* argv[])
         mainot.setrender();
         SDL_RenderPresent(renderer);
     }
+=======
+
     return 0;
 }
