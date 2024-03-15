@@ -1,20 +1,20 @@
 #include <SDL.h>
-<<<<<<< HEAD
 #include <SDL_image.h>
 #include <bits/stdc++.h>
 using namespace std;
 SDL_Renderer *renderer=nullptr;
 bool run=true;
+int score=0;
 vector<vector<int>>tilemap={
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,3,2,1,2,1,0,0,0,0,0,0,0,2,3,1,3,3,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,1,2,3,2,0,0,0,0,0,0,0,0,1,2,3,2,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,3,2,1,2,1,2,3,3,2,1,3,2,2,3,1,3,3,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,1,3,2,1,2,1,2,3,3,2,0,0,0,0,0,0,1,3,2,2,3,1,3},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,5,5,5,5,5,5,5},
-    {0,0,4,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,1,5,5,5,5,5,5,5,5},
+    {0,0,0,0,0,0,0,4,0,0,4,0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,0},
     {1,2,3,1,3,1,1,2,1,3,1,1,2,1,3,1,2,1,3,1,1,2,1,3,1,2,1}};
     bool checkcondition(SDL_Rect& object1,SDL_Rect& object2)
 {
@@ -142,23 +142,27 @@ protected:
 class Enemy:public Baseobject
 {
 public:
-    Enemy(){tex=nullptr;rect.x=1024;rect.y=0;}
+    Enemy(){tex=nullptr;rect.x=1024;rect.y=0;frame=0;slowspeed=0;touch=false;}
     void handlerun()
     {
         x_val=-5;
+        slowspeed+=1;
+        if(slowspeed==120) slowspeed=0;
+        if(slowspeed%4==0) frame+=1;
         rect.x+=x_val;
-        if(rect.x<=0)  {rect.x=1024;rect.y=rand()%3*160+120;}
-         loadtexture("roi.png",238,243,250);
+        if(rect.x<=0)  {rect.x=1024;rect.y=((rand()%3)*3+2)*60+10;score++;touch=false;}
+        setrectimage();
     }
     void reset()
     {
+        score+=2;
         rect.x=1080+300;
-        rect.y=rand()%3*160+120;
-        loadtexture("roi.png",238,243,250);
+        rect.y=((rand()%3)*3+2)*60+10;
+        touch=false;
     }
     void initshoot(Shoot *shoot){
         shoot->setrect(rect.x,rect.y+15,30,30);
-        shoot->loadtexture("png/Kunai.png");
+        shoot->loadtexture("Kunai.png");
         shoot->setmove(true);
         shootlist.push_back(shoot);}
     void handleshoot()
@@ -177,60 +181,163 @@ public:
        }
 
     }
-    vector<Shoot*> &getshootlist(){return shootlist;}
+    SDL_Rect &getrectimage(){return rect1;}
+    bool &gettouch(){return touch;}
+    void setrectimage()
+    {
+        rect1.w=53;
+        rect1.h=57;
+        rect1.y=0;
+        int i=frame%3;
+        rect1.x=i*53;
+
+    }
+    vector<Shoot*>&getshootlist(){return shootlist;}
+    void settouch(bool a){touch=a;}
+
 
 protected:
     int x_val;
     int y_val;
     vector<Shoot*>shootlist;
-    int loadimage;
+    SDL_Rect rect1;
+    int frame;
+    int slowspeed;
+    bool touch;
+
 };
 class Mainobject:public Baseobject
 {
 public:
-    Mainobject(){x_val=0;y_val=0;tex=nullptr;rect.x=0;rect.y=0;is_ground=false; speedfall=1;isright=true;numberpicture=0;namepicture="png/";status=0;}
+    enum Doing
+    {
+        DUNG=0,
+        CHAY=1,
+        NHAY=2,
+        ROI=3,
+        CHEO=4,
+        DAU=5,
+        NEM=6,
+    };
+    Mainobject(){x_val=0;y_val=0;tex=nullptr;rect.x=0;rect.y=0;is_ground=false; speedfall=1;isright=true;status=0;frame=0;statusbefore=-1;cheo=false;numbercheo=0;fixerror=false;hp=3;mana=8;}
     void setshootlist(vector<Shoot*>shoot){shootlist=shoot;}
     vector<Shoot*> &getshootlist(){return shootlist;}
     void uppos(){x_pos=rect.x;y_pos=rect.y;}
-    void checkmap(Mapp mapp)
+    void checkmap(vector<vector<int>>mapp)
 {
-    if (mapp.gettouch())
-    {
-        is_ground = false;
-        int valx = mapp.getvalx();
-        int valy = mapp.getvaly();
+
+        x_pos+=x_val;
+        if(x_pos>=1620-50) x_pos=1620-50;
+        else if(x_pos<=0)  x_pos=0;
+        y_pos+=y_val;
+        if(y_pos>600-50) y_pos=600-50;
+        else if(y_pos<0)  y_pos=0;
+        is_ground=false;
         int rect_x1 = x_pos;
-        int rect_x2 = x_pos + rect.w-1;
+        int rect_x2 = x_pos + rect.w;
         int rect_y1 = y_pos;
-        int rect_y2 = y_pos + rect.h-1;
-        int x1= rect_x1 / 60;
-        int x2=rect_x2/60;
+        int rect_y2 = y_pos + rect.h;
+        int x1= rect_x1/60;
+        int x2=(rect_x2-1)/60;
         int y1=rect_y1/60;
-        int y2=rect_y2/60;
-        if ((x1==valx || x2 == valx)&&y2==valy) {
-            if (y_val>0) {y_val = 0;is_ground = true;
-            y_pos = y2 * 60 - rect.h;
-        }}
-        else if ((x1==valx|| x2== valx)&&y1==valy) {
-            if (y_val < 0) {y_val = 0;y_pos = y1 * 60;}
+        int y2=(rect_y2-1)/60;
+        if(cheo==true)
+        {
+            if(((mapp[y2][x2]!=0&&mapp[y2][x2]!=4)||(mapp[y2][x1]!=0&&mapp[y2][x1]!=4))&&fixerror==true||numbercheo>0)
+            {
+               if(y2*60-50+1==491)
+               {y_pos=y2*60-50+1;
+                is_ground=true;
+                cheo=false;numbercheo=0;
+                fixerror=false;
+                }
+               else
+               {
+                   if(statusbefore!=CHEO)
+                   {numbercheo=(y2+1);}
+                   is_ground=true;
+                   if(y_pos<numbercheo*60)
+                   {
+                       is_ground=true;
+                       y_val=2;
+                       x_val=0;
+                       y_pos+=y_val;
+                       status=CHEO;
+                   }
+                   else {cheo=false;numbercheo=0;fixerror=false;}
+
+               }
+            }
+            else
+          {
+             if((mapp[y1][x1]!=0&&mapp[y1][x1]!=4)||(mapp[y1][x2]!=0&&mapp[y1][x2]!=4)||numbercheo<0)
+            {
+               if(statusbefore!=CHEO)
+                {numbercheo=-(y1-1);}
+               if(y_pos>-numbercheo*60+10)
+               {
+                   is_ground=true;
+                   y_val=-2;
+                   x_val=0;
+                   y_pos+=y_val;;
+                   status=CHEO;
+               }
+               else{
+                cheo=false;
+                numbercheo=0;
+               }
+            }
+            else
+            {
+                cheo=false;
+                numbercheo=0;
+                y_pos-=y_val;
+                y_val=0;
+            }
+          }
         }
-        if (y1 ==valy&& x2 == valx) {
-            if (x_val > 0) {x_val = 0;x_pos = x2 * 60- rect.w;
-        }}
-        else if ( y1 == valy&& x1 == valx) {
-            if (x_val < 0){ x_val = 0;x_pos = x1 * 60;}
+        else{
+        if((mapp[y2][x2]!=0&&mapp[y2][x2]!=4)||(mapp[y2][x1]!=0&&mapp[y2][x1]!=4))
+            {
+               y_pos=y2*60-50+1;
+               is_ground=true;
+               if(y_val>0) y_val=0;
+            }
+        if(y_val<0)
+        {
+             if((mapp[y1][x1]!=0&&mapp[y1][x1]!=4)||(mapp[y1][x2]!=0&&mapp[y1][x2]!=4))
+            {
+               y_pos=(y1+1)*60;
+               y_val=0;
+            }
         }
-    }
+        if(x_val>0)
+        {
+             if((mapp[y1][x2]!=0&&mapp[y1][x2]!=4))
+            {
+               x_pos=x2*60-50+1;
+               x_val=0;
+            }
+        }
+        else if(x_val<0)
+        {
+             if((mapp[y1][x1]!=0&&mapp[y1][x1]!=4))
+            {
+               x_pos=(x1+1)*60;
+               x_val=0;
+            }
+        }
+        }
 }
     void freefall()
     {
         if(is_ground==false)
         {
             y_val+=speedfall;
-            y_pos+=y_val;
             static int ii=1;
             ii++;
-            if(ii%30==0) speedfall+=1;
+            if(ii==160) ii=0;
+            if(ii%80==0) speedfall+=1;
             if(speedfall>=9) speedfall=9;
         }
         else speedfall=1;
@@ -248,27 +355,58 @@ public:
                 switch(event.key.keysym.sym)
                 {
                      case SDLK_w:
-                        y_val-=15;
+                        if(keypress.find(SDLK_w)==keypress.end()) keypress[SDLK_w] =0;
+                        if(keypress[SDLK_w]<10)
+                        {y_val-=15;
+                        if(y_val<=-60) y_val=-59;}
                         break;
                     case SDLK_s:
-                        y_val+=15;
-                        if(y_val>15) y_val=15;
+                       if(keypress.find(SDLK_s)==keypress.end()) keypress[SDLK_s] =0;
+                        if(keypress[SDLK_s]<1000)
+                        {y_val+=15;
+                        if(y_val>=60) y_val=59;}
                         break;
                     case SDLK_d:
-                        x_val+=15;
-                        isright=true;
+                        if(keypress.find(SDLK_d) ==keypress.end()) keypress[SDLK_d] =0;
+                        if(keypress[SDLK_d]<1000)
+                        {x_val+=15;if(x_val>=60) x_val=59;
+                        isright=true;}
                         break;
                     case SDLK_a:
-                        x_val-=15;
-                        isright=false;
+                       if(keypress.find(SDLK_a) ==keypress.end()) keypress[SDLK_a] =0;
+                        if(keypress[SDLK_a]<1000)
+                        {x_val-=15;if(x_val<=-60) x_val=-59;
+                        isright=false;}
                         break;
                     case SDLK_q:
-                        {Shoot *shoot=new Shoot();
+                        if(keypress.find(SDLK_q) ==keypress.end()) keypress[SDLK_q] =0;
+                        if(keypress[SDLK_w]<1000)
+                        {if(mana>=1)
+                        {
+                        status=NEM;
+                        isright=true;
+                        Shoot *shoot=new Shoot();
                         shoot->setrect(rect.x+30,rect.y+30,40,20);
-                        shoot->loadtexture("png/Kunai.png");
+                        shoot->loadtexture("Kunai.png");
                         shoot->setmove(true);
                         shootlist.push_back(shoot);
-                        break;}
+                        mana--;}
+                        break;
+                        }
+                        break;
+                    case SDLK_f:
+                         if(keypress.find(SDLK_f) ==keypress.end()) keypress[SDLK_f] =0;
+                        if(keypress[SDLK_f]<1000)
+                          {cheo=true;
+                          fixerror=true;}
+                          break;
+                    case SDLK_e:
+                           if(keypress.find(SDLK_e) ==keypress.end()) keypress[SDLK_e] =0;
+                           if(keypress[SDLK_e]<1000)
+                            {cheo=true;
+                            y_val-=10;
+                            if(y_val>=-80) y_val=-79;}
+                            break;
                 }
 
                 break;
@@ -276,49 +414,172 @@ public:
                 switch(event.key.keysym.sym)
                 {
                     case SDLK_w:
+                        keypress.erase(SDLK_w);
                         y_val=0;
                         break;
                     case SDLK_s:
+                        keypress.erase(SDLK_s);
                         y_val=0;
                         break;
                     case SDLK_d:
+                        keypress.erase(SDLK_d);
                         x_val=0;
                         break;
                     case SDLK_a:
+                        keypress.erase(SDLK_a);
                         x_val=0;
+                        break;
+                    case SDLK_e:
+                        keypress.erase(SDLK_e);
+                        y_val=0;
+                        break;
+                    case SDLK_f:
+                        keypress.erase(SDLK_f);
+                        y_val=0;
+                        break;
+                    case SDLK_q:
+                        keypress.erase(SDLK_q);
+                        status=DUNG;
                         break;
                     default:
                         break;
                 }
                 break;
         }
-        x_pos+=x_val;
-        if(x_pos>=1620-50) x_pos=1620-50;
-        else if(x_pos<=0)  x_pos=0;
-        y_pos+=y_val;
-        if(y_pos>600-50) y_pos=600-50;
-        else if(y_pos<0)  y_pos=0;
+        for(auto&[key,time]:keypress)
+        {
+            time +=5;
+        }
     }
     void handle()
     {
+        setstatus();
+        setrectimage();
         if(x_pos<490) rect.x=x_pos;
         else if(x_pos>1030) rect.x=x_pos-540;
         else rect.x=490;
-        if(y_pos>540-50) y_pos=540-50;
+        if(y_pos>540-50+1) y_pos=540-50-1;
         rect.y=y_pos;
         if(rect.y<0) rect.y=0;
+        setmana();
     }
-   /* void setstate()
-    {
-        if()
-    }*/
     void setisground(bool a){is_ground=a;}
-    int getxpos(){return x_pos;}
+    int &getxpos(){return x_pos;}
     int getypos(){return y_pos;}
     int getyval(){return y_val;}
     int getxval(){return x_val;}
     bool getisground(){return is_ground;}
     bool &getisright(){return isright;}
+    void setstatus()
+    {
+
+        if(status==CHEO&&numbercheo!=0||status==DAU||status==NEM){;}
+        else if(is_ground==true&&x_val==0) status=DUNG;
+        else if(is_ground==true&&x_val!=0) status=CHAY;
+        else if(is_ground==false&&y_val>0) status= ROI;
+        else if(is_ground==false&&y_val<0) status= NHAY;
+        if(statusbefore!=status)
+        {
+            frame=0;
+            slowspeed=0;
+        }
+        statusbefore=status;
+    }
+    void setstatusdau()
+    {
+        status=DAU;
+    }
+    SDL_Rect getrectimage()
+    {
+        return rect1;
+    }
+    void setrectimage()
+    {
+        rect1.w=33;
+        rect1.h=33;
+        if(isright==true) rect1.y=0;
+        else rect1.y=33;
+        if(status==DUNG)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%4==0) frame++;
+            int i=frame%4;
+            rect1.x=i*33;
+        }
+        else if(status==CHAY)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%5==0) frame++;
+            int i=frame%5;
+            rect1.x=(i+4)*33;
+        }
+        else if(status==NHAY)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%6==0) frame++;
+            if(frame>=2) rect1.x=10*33;
+            else rect1.x=9*33;
+        }
+        else if(status==ROI)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%4==0) frame++;
+            int i=frame%2;
+            rect1.x=(i+11)*33;
+        }
+        else if(status==CHEO)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%3==0) frame++;
+            int i=frame%3;
+            rect1.x=(i+13)*33;
+        }
+        else if(status==DAU)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%30==0) frame++;
+            if(frame>=3) rect1.x=17*33;
+            else rect1.x=16*33;
+        }
+        else if(status==NEM)
+        {
+            slowspeed+=1;
+            if(slowspeed==120) slowspeed=0;
+            if(slowspeed%30==0) frame++;
+            int i=frame%2;
+            rect1.x=(i+7)*33;
+        }
+    }
+    void setmana()
+    {
+        mana+=0.001;
+        if(mana>=8) mana=8;
+    }
+    void sethp(bool a)
+    {
+        if(a==true) hp+=1;
+        else hp--;
+        if(hp>3) hp=3;
+    }
+    float &getmana(){return mana;}
+    int &gethp(){return hp;}
+    int &getstatus(){return status;}
+    void resetstatus()
+    {
+        status=DUNG;
+    }
+    void addmana()
+    {
+        mana+=2;
+        if(mana>8) mana=8;
+    }
+
 
 protected:
     int x_val;
@@ -329,9 +590,104 @@ protected:
     bool is_ground;
     int speedfall;
     bool isright;
-    int numberpicture;
     int status;
-    string namepicture;
+    int statusbefore;
+    int slowspeed;
+    SDL_Rect rect1;
+    bool cheo;
+    int numbercheo;
+    int frame;
+    bool fixerror;
+    int hp;
+    float mana;
+    unordered_map<SDL_Keycode, float> keypress;
+};
+class Item :public Baseobject
+{
+public:
+    Item(){display=false;rect.h=40;rect.w=40,rect.x=0;rect.y=0;slowspeed=0;rect1.w=21;rect1.h=21;rect1.y=0;frame=0;x_pos=0;}
+    void setrectitemload(int x)
+    {
+        if(x>=490&&x<=1030) rect.x=x_pos-x+490;
+        else if(x<490) rect.x=x_pos;
+        else rect.x=x_pos-540;
+    }
+    void setrectitem()
+    {
+        rect.y=((rand()%3)*3+2)*60;
+        rect.x=(rand()%12+6)*60;
+        x_pos=rect.x;
+    }
+    void setrectitem(int x)
+    {
+        rect.y=((rand()%3)*3+2)*60;
+        if(x>=490&&x<=1030)
+        {rect.x=(rand()%12+6)*60-x+490;
+        x_pos=rect.x+x-490;}
+        else if(x<490) rect.x=(rand()%12+6)*60;
+        else rect.x=(rand()%12+6)*60-540;
+    }
+    void setdisplay()
+    {
+        display =false;
+    }
+    bool &getdisplay()
+    {
+        return display;
+    }
+    SDL_Rect &getrect1(){return rect1;}
+    void setrectimage()
+    {
+       slowspeed++;
+       if(slowspeed==150) slowspeed=0;
+       if(slowspeed%30==0) frame++;
+       int i=frame%7;
+       rect1.x=i*21;
+    }
+    void setdisplayscreen()
+    {
+        if(display==false){
+        static int i=1;
+        i++;
+        if(i%1000==0) {display=true;i=1;}
+        }
+    }
+    void reset(int x)
+    {
+        setdisplay();
+        setrectitem(x);
+    }
+protected:
+    bool display;
+    SDL_Rect rect1;
+    int slowspeed;
+    int frame;
+    int x_pos;
+};
+class Bar:public Baseobject
+{
+public:
+    Bar(){rect1.x=0;rect1.y=0;}
+    void setrect(int number,int x,int y)
+    {
+        rect.x=x;
+        rect.y=y;
+        if(number==3) {rect.h=48;rect1.h=250;}
+        else {rect.h=18;rect1.h=225;}
+    }
+    void setrectw(int x)
+    {
+       rect1.w=x*315;
+       rect.w=48*x;
+    }
+    void setrectw(float x)
+    {
+        rect1.w=225*x;
+        rect.w=18*x;
+    }
+    SDL_Rect getrect1(){return rect1;}
+protected:
+    SDL_Rect rect1;
 };
 int main(int argc, char* argv[])
 {
@@ -376,30 +732,41 @@ int main(int argc, char* argv[])
                 setmap.settouch(false);
                 mapp.push_back(setmap);
             }
-            else if(tilemap[i][j]==5)
-            {
-                setmap.setrect1(112,16,16,16);
-                setmap.settouch(false);
-                mapp.push_back(setmap);
-            }
         }
     }
+    Bar healthbar;
+    healthbar.loadtexture("heart.png");
+    healthbar.setrect(3,100,50);
+    Bar manabar;
+    manabar.loadtexture("mana.png",255,255,255);
+    manabar.setrect(8,100,100);
+    Baseobject avatar;
+    avatar.loadtexture("avartar.png");
+    avatar.setrect(35,30,75,75);
     Mainobject mainot;
-    mainot.setrect(400,400,50,50);
+    mainot.setrect(400,200,50,50);
     mainot.uppos();
     mainot.loadtexture("main.png");
     Enemy *enemys=new Enemy[5];
     for(int e=0;e<5;e++)
     {
        Enemy *enemy=(enemys+e);
-       enemy->setrect(1620+e*350,rand()%3*160+120,40,40);
-       enemy->loadtexture("roi.png",238,243,250);
-       // enemy->initshoot(new Shoot());
+       enemy->setrect(1620+e*350,((rand()%3)*3+2)*60+10,40,40);
+       enemy->loadtexture("roi.png");
     }
     SDL_Rect rect1{0,0,1620,600};
     SDL_Rect rect2{1620,0,1620,600};
+    vector<Item>item;
+    for(int i=0;i<2;i++)
+    {
+        Item setitem;
+        setitem.loadtexture("cherry.png");
+        setitem.setrectitem();
+        item.push_back(setitem);
+    }
     while(run)
     {
+        int i1=SDL_GetTicks();
         SDL_RenderClear(renderer);
         rect1.x-=1;
         rect2.x-=1;
@@ -408,20 +775,27 @@ int main(int argc, char* argv[])
         if(rect1.x<=-1620) rect1.x=1620;
         if(rect2.x<=-1620) rect2.x=1620;
         mainot.handleevent();
+        mainot.freefall();
+        mainot.checkmap(tilemap);
+        mainot.handle();
         for(int i=0;i<mapp.size();i++)
-        {
-            mainot.checkmap(mapp[i]);
-            if(mainot.getisground()==true) isground=true;
-            int xpos=mainot.getxpos();
+        {   int xpos=mainot.getxpos();
             mapp[i].updatemap(xpos);
             mapp[i].setrect(xpos);
             mapp[i].setrender(mapp[i].getrect1());
 
         }
-        mainot.setisground(isground);
-        mainot.freefall();
-        mainot.handle();
-        isground=false;
+        for(int i=0;i<item.size();i++)
+        {   int xpos=mainot.getxpos();
+            item[i].setdisplayscreen();
+            if(item[i].getdisplay()==true){
+            item[i].setrectimage();
+            item[i].setrectitemload(xpos);
+            bool a=checkcondition(mainot.getrect(),item[i].getrect());
+            if(a==true) {item[i].reset(xpos);mainot.sethp(true);mainot.addmana();}
+            else {item[i].setrender(item[i].getrect1());}}
+
+        }
         vector<Shoot*>& shootlist = mainot.getshootlist();
           for (int i=0;i<shootlist.size();)
     {
@@ -455,28 +829,38 @@ int main(int argc, char* argv[])
       {
         Enemy *enemy=(enemys+e);
         enemy->handlerun();
-        //enemy->handleshoot();
-        enemy->setrender();}/*
+        enemy->setrender(enemy->getrectimage());
         bool kt=checkcondition(mainot.getrect(),enemy->getrect());
         if(kt==true)
         {
-            return 1;
+            mainot.setstatusdau();
+            if(enemy->gettouch()==false)
+            {mainot.sethp(false);
+            enemy->settouch(true);}
         }
-        vector<Shoot*>& shootlist1 = enemy->getshootlist();
-        for(int ii=0;ii<enemy->getshootlist().size();ii++)
-        {
-            Shoot *shoot1=shootlist1[ii];
-            bool kt1=checkcondition(mainot.getrect(),shoot1->getrect());
-            if(kt1==true)
-            {
-                return 1;
-            }
-        }
-      }*/
-        mainot.setrender();
-        SDL_RenderPresent(renderer);
-    }
-=======
 
+      }
+        mainot.handle();
+        avatar.setrender();
+        int hp=mainot.gethp();
+        healthbar.setrectw(hp);
+        float mana=mainot.getmana();
+        manabar.setrectw(mana);
+        healthbar.setrender(healthbar.getrect1());
+        manabar.setrender(manabar.getrect1());
+        mainot.setrender(mainot.getrectimage());
+        SDL_RenderPresent(renderer);
+        if(mainot.getstatus()==5) mainot.resetstatus();
+        if(hp<=0) {
+                SDL_Delay(3000);
+                return 0;
+        }
+        int i2=SDL_GetTicks();
+        if(i2-i1<1000/60)
+        {
+            SDL_Delay(100/6-i2+i1);
+        }
+
+    }
     return 0;
 }
