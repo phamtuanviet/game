@@ -12,8 +12,10 @@ Sau đó giải nén thư mục nhấn vào file overover.exe dể chơi.
 Bạn sẽ điều khiển nhân vật game ![player-idle-4 - Copy](https://github.com/phamtuanviet/game/assets/161930160/35b65c83-9c1a-4705-84a5-bb4f9003fb45)<br>
 Né hoặc tiêu diệt các vật cản trong game ![bat-fly1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/44a4daf7-a5ac-4c06-b843-526daf924abd)
 ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/9b07a407-9c78-4cb8-b5ad-b1680e02cb3a)<br>
-Nhân vật sẽ có 3 mạng tối đa ![heart](https://github.com/phamtuanviet/game/assets/161930160/bce5aa1e-0634-4d70-b517-57d6c0948b84) <br>
-Có 8 năng lượng tối đa ![mana](https://github.com/phamtuanviet/game/assets/161930160/c6dec48d-2d1f-4f85-addd-18763b534b67) <br>
+Nhân vật sẽ có 3 mạng tối đa ![heart](https://github.com/phamtuanviet/game/assets/161930160/f0a93f84-1d0f-4b75-adc5-8cf7b6981c21)
+ <br>
+Có 8 năng lượng tối đa ![mana](https://github.com/phamtuanviet/game/assets/161930160/7b3a130f-f147-44d7-b29c-93851c15fce0)
+ <br>
 Cố gắng sống càng lâu càng tốt.<br>
 # Hướng dẫn cách chơi
 ![tutorial](https://github.com/phamtuanviet/game/assets/161930160/88d26391-5207-4f47-9441-74e4bde996d0)
@@ -22,10 +24,13 @@ A : nhân vật di chuyển sang trái <br>
 D : nhân vật di chuyển sang phải <br>
 W : nhân vật nhảy lên <br>
 S : nhân vật nhảy xuống <br>
-Q: nhân vật bắn ra một phi tiêu di chuyển theo đường thẳng ngang màn hình gặp kẻ địch sẽ tiêu diệt chúng.(chiêu này sẽ tiêu tốn một năng lượng)![Kunai](https://github.com/phamtuanviet/game/assets/161930160/f60e00e7-50f5-450f-b7ea-c42a65a184cf)<br>
-F: nếu dưới chân nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/ba5f9374-8037-4aff-b190-5e0223b916c0)
+Q: nhân vật bắn ra một phi tiêu di chuyển theo đường thẳng ngang màn hình gặp kẻ địch sẽ tiêu diệt chúng.(chiêu này sẽ tiêu tốn một năng lượng) ![Kunai](https://github.com/phamtuanviet/game/assets/161930160/87a98cd5-4afe-4da4-9358-9c035669f454)
+<br>
+F: nếu dưới chân nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/ec1664b8-d17d-4897-b236-d7fc45723bf7)
+
  nhân vật sẽ chèo xuống. <br>
-E: nếu trên đầu nhân vật là đất![dat](https://github.com/phamtuanviet/game/assets/161930160/ba5f9374-8037-4aff-b190-5e0223b916c0)
+E: nếu trên đầu nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/ec1664b8-d17d-4897-b236-d7fc45723bf7)
+
  nhân vật sẽ chèo lên. <br>
 R: nhân vật sẽ bắn ra một chuỗi lửa toàn màn hình từ dưới đi lên gặp địch sẽ tiêu diệt chúng.(chiêu này sẽ tiêu tốn 6 năng lượng)![Muzzleflash1](https://github.com/phamtuanviet/game/assets/161930160/7196725e-7c8f-407c-870d-b48bfd9670e5) <br>
 # Các vật phẩm khi chơi
