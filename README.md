@@ -1,17 +1,17 @@
 # Linkvideo
-[Link video choi game](https://www.youtube.com/watch?v=a8CwpGARAsQ)<br>
+[Link video chơi game](https://www.youtube.com/watch?v=a8CwpGARAsQ)<br>
 # Cách tải game
 ## Cách 1: Không bao gồm code.
 Tải game (được nén thành .zip) tại link sau:<br>
 Sau đó giải nén thư mục nhấn vào file overover.exe dể chơi.
-[Link tai game](https://github.com/phamtuanviet/game/releases/tag/v1.0.0)<br>
+[Link tải game](https://github.com/phamtuanviet/game/releases/tag/v1.0.0)<br>
 ## Cách 2: Bao gồm code và có thể biên dịch.
 **Bước 1:** Clone repo này về hoặc Hoặc Chọn Code -> Download Zip.<br>
 **Bước 2:** Sau đó giải nén thư mục, chọn bin -> Debug  ->overover.exe để chơi.<br>
 **Từ bước này chở đi thực hiện khi muốn xem và biên dịch code (bỏ qua bước 2 trước đó)** <br>
 **Bước 3:** Cài đặt mingw và thư viện sdl2 trong IDE (tôi dùng Codeblocks). <br>
 **Bước 4:** Dùng Codeblocks mở file cbp và chạy dự án. <br>
-**"Lưu ý khi dùng IDE khác thì bước 4 sẽ khác nhau"**
+**"Lưu ý khi dùng IDE khác nhau thì các bước từ bước 3 sẽ khác nhau"**
 # Giới thiệu game
 Bạn sẽ điều khiển nhân vật game ![player-idle-4 - Copy](https://github.com/phamtuanviet/game/assets/161930160/35b65c83-9c1a-4705-84a5-bb4f9003fb45)<br>
 Né hoặc tiêu diệt các vật cản trong game ![bat-fly1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/44a4daf7-a5ac-4c06-b843-526daf924abd)
@@ -46,7 +46,7 @@ Khi ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/1619301
 Khi ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/9b07a407-9c78-4cb8-b5ad-b1680e02cb3a) bị tiêu diêt bạn được 5 điểm.<br>
 Khi bạn bị và chạm thì sẽ mất một mạng khi hết mạng bạn sẽ thua.
 # Mô tả hình ảnh và âm thanh
-Được lấy từ trên của hàng assetstore (free) <br>
+Được lấy từ trên assetstore (free) <br>
 # Mô tả về source code game.
 Folder anh : chứa tất cả các ảnh làm game.<br>
 Folder nhac : chưa tất cả âm thanh có trong game.<br>
