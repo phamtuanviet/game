@@ -14,7 +14,7 @@ Né hoặc tiêu diệt các vật cản trong game ![bat-fly1 - Copy](https://g
 ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/9b07a407-9c78-4cb8-b5ad-b1680e02cb3a)<br>
 Nhân vật sẽ có 3 mạng tối đa ![heart](https://github.com/phamtuanviet/game/assets/161930160/f0a93f84-1d0f-4b75-adc5-8cf7b6981c21)
  <br>
-Có 8 năng lượng tối đa ![mana](https://github.com/phamtuanviet/game/assets/161930160/7b3a130f-f147-44d7-b29c-93851c15fce0)
+Có 8 năng lượng tối đa ![mana](https://github.com/phamtuanviet/game/assets/161930160/69f6c4bf-16af-4de1-82f6-c82ee0a5c522)
  <br>
 Cố gắng sống càng lâu càng tốt.<br>
 # Hướng dẫn cách chơi
