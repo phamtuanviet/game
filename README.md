@@ -8,6 +8,10 @@ Sau đó giải nén thư mục nhấn vào file overover.exe dể chơi.
 ## Cách 2: Bao gồm code và có thể biên dịch.
 **Bước 1:** Clone repo này về hoặc Hoặc Chọn Code -> Download Zip.<br>
 **Bước 2:** Sau đó giải nén thư mục, chọn bin -> Debug  ->overover.exe để chơi.<br>
+**Từ bước này chở đi thực hiện khi muốn xem và biên dịch code (bỏ qua bước 2 trước đó)** <br>
+**Bước 3:** Cài đặt mingw và thư viện sdl2 trong IDE (tôi dùng Codeblocks). <br>
+**Bước 4:** Dùng Codeblocks mở file cbp và chạy dự án. <br>
+**"Lưu ý khi dùng IDE khác thì bước 4 sẽ khác nhau"**
 # Giới thiệu game
 Bạn sẽ điều khiển nhân vật game ![player-idle-4 - Copy](https://github.com/phamtuanviet/game/assets/161930160/35b65c83-9c1a-4705-84a5-bb4f9003fb45)<br>
 Né hoặc tiêu diệt các vật cản trong game ![bat-fly1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/44a4daf7-a5ac-4c06-b843-526daf924abd)
