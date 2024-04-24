@@ -23,8 +23,10 @@ D : nhân vật di chuyển sang phải <br>
 W : nhân vật nhảy lên <br>
 S : nhân vật nhảy xuống <br>
 Q: nhân vật bắn ra một phi tiêu di chuyển theo đường thẳng ngang màn hình gặp kẻ địch sẽ tiêu diệt chúng.(chiêu này sẽ tiêu tốn một năng lượng)![Kunai](https://github.com/phamtuanviet/game/assets/161930160/f60e00e7-50f5-450f-b7ea-c42a65a184cf)<br>
-F: nếu dưới chân nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/7d758dfa-d45b-4f69-a595-58e0664ec4ec) nhân vật sẽ chèo xuống. <br>
-E: nếu trên đầu nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/7d758dfa-d45b-4f69-a595-58e0664ec4ec) nhân vật sẽ chèo lên. <br>
+F: nếu dưới chân nhân vật là đất ![dat](https://github.com/phamtuanviet/game/assets/161930160/ba5f9374-8037-4aff-b190-5e0223b916c0)
+ nhân vật sẽ chèo xuống. <br>
+E: nếu trên đầu nhân vật là đất![dat](https://github.com/phamtuanviet/game/assets/161930160/ba5f9374-8037-4aff-b190-5e0223b916c0)
+ nhân vật sẽ chèo lên. <br>
 R: nhân vật sẽ bắn ra một chuỗi lửa toàn màn hình từ dưới đi lên gặp địch sẽ tiêu diệt chúng.(chiêu này sẽ tiêu tốn 6 năng lượng)![Muzzleflash1](https://github.com/phamtuanviet/game/assets/161930160/7196725e-7c8f-407c-870d-b48bfd9670e5) <br>
 # Các vật phẩm khi chơi
 Quả cherry ![cherry-1](https://github.com/phamtuanviet/game/assets/161930160/2c517b31-6a10-4119-9315-d3e4dad1df35)
