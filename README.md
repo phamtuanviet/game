@@ -7,7 +7,7 @@ Sau đó giải nén thư mục nhấn vào file overover.exe dể chơi.
 [Link tai game](https://github.com/phamtuanviet/game/releases/tag/v1.0.0)<br>
 ## Cách 2: Bao gồm code và có thể biên dịch.
 **Bước 1:** Clone repo này về hoặc Hoặc Chọn Code -> Download Zip.<br>
-**Bước 2:** Sau đó nhấn vào thư mục bin -> Debug  ->overover.exe để chơi.<br>
+**Bước 2:** Sau đó giải nén thư mục, chọn bin -> Debug  ->overover.exe để chơi.<br>
 # Giới thiệu game
 Bạn sẽ điều khiển nhân vật game ![player-idle-4 - Copy](https://github.com/phamtuanviet/game/assets/161930160/35b65c83-9c1a-4705-84a5-bb4f9003fb45)<br>
 Né hoặc tiêu diệt các vật cản trong game ![bat-fly1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/44a4daf7-a5ac-4c06-b843-526daf924abd)
@@ -41,4 +41,18 @@ Khi ![bat-fly1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/44a
 Khi ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/9b07a407-9c78-4cb8-b5ad-b1680e02cb3a) bay hết màn hình bạn được 2 điểm.<br>
 Khi ![eagle-attack-1 - Copy](https://github.com/phamtuanviet/game/assets/161930160/9b07a407-9c78-4cb8-b5ad-b1680e02cb3a) bị tiêu diêt bạn được 5 điểm.<br>
 Khi bạn bị và chạm thì sẽ mất một mạng khi hết mạng bạn sẽ thua.
+# Mô tả hình ảnh và âm thanh
+Được lấy từ trên của hàng assetstore (free) <br>
+# Mô tả về source code game.
+Folder anh : chứa tất cả các ảnh làm game.<br>
+Folder nhac : chưa tất cả âm thanh có trong game.<br>
+Folder bin : trong đó có file exe để chơi game.
+File và Folder SDL2... chứa thư viện để cài đăt SDL2. <br>
+File chu.ttf : là phông chữ trong game. <br>
+File overover.cbp : là file project trong Codeblocks.<br>
+File highscore.txt : để lưu điểm số cao nhất của người chơi.<br>
+File .cpp và .h : là file code để hoạt động game. <br>
+File readme.md : là file mô tả dự án game. <br>
+Những file còn lại : là phần chạy biên dịch trong dự án của codeblocks. <br>
+**Game được lấy cảm hừng từ kênh youtube (https://www.youtube.com/@PhatTrienPhanMem123AZ) "không sao chép "**
 
