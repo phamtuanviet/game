@@ -54,5 +54,16 @@ File highscore.txt : để lưu điểm số cao nhất của người chơi.<br
 File .cpp và .h : là file code để hoạt động game. <br>
 File readme.md : là file mô tả dự án game. <br>
 Những file còn lại : là phần chạy biên dịch trong dự án của codeblocks. <br>
-**Game được lấy cảm hừng từ kênh youtube (https://www.youtube.com/@PhatTrienPhanMem123AZ) "không sao chép "**
-
+**Game được lấy cảm hừng từ kênh youtube (https://www.youtube.com/@PhatTrienPhanMem123AZ)** <br>
+# Mô tả kĩ hơn về các file cpp và h
+main.cpp hàm main để khởi tạo và chạy chương trình <br>
+Commonfuntion.h và Commonfuntion.cpp bao gồm những hàm và khái niệm chung của cả chương trình.<br>
+Baseobject.h và Baseobject.cpp thư viện và chung của nhân vật cơ bản.<br>
+Menu.h và Menu.cpp menu của chương trình game và nhưng màn hình khác (pausegame,highscore,tutorial,displayscore).<br>
+Enemy.h vầ Enemy.cpp tạo kẻ thù cho game.<br>
+Mainobject.h và Mainbject.cpp tạo nhân vật điều khiển.<br>
+Bar.h và Bar.cpp tạo thanh máu , năng lượng.<br>
+Mapp.h và Mapp.cpp tạo map cho game.<br>
+Text.h và Text.cpp tạo chữ hiển thị cho game.<br>
+Shoot.h và Shoot.cpp tạo đạn bắn cho nhân vật.<br>
+Time.h và Time.cpp tính thời gian chạy trong game.<br>
